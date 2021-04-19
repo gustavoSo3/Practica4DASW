@@ -24,6 +24,7 @@ registerForm.addEventListener("change", (e) => {
 		registerButton.classList.remove("disabled");
 	}else { 
 		registerButton.classList.add("disabled");
+		log("Campo invalido");
 	}
 });
 
@@ -85,7 +86,6 @@ loginButton.addEventListener("click", (e) => {
 	e.preventDefault();
 });
 
-
 function getSex(){
 	const rbs = document.querySelectorAll('input[name="sexo"]');
 	for (const rb of rbs) {
@@ -94,6 +94,3 @@ function getSex(){
 		}
 	}
 }
-
-
-

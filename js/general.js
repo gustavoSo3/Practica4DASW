@@ -9,6 +9,7 @@ function getAlumToken(email){
     if (this.readyState == 4 && this.status == 200) {
       sessionStorage.token = JSON.parse(this.responseText).token;
     }
+		log(this.responseText);
   };
 
 	xhttp.open("GET", "https://users-dasw.herokuapp.com/api/mytoken", false);

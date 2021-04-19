@@ -39,11 +39,11 @@ updateForm.addEventListener('change', (e) => {
 	if(invalid.length > 0) areValid = false;
 	if(updatePassword.value != updateRPassword.value) areValid = false;
 
-
 	if(areValid){
 		updateButton.classList.remove("disabled");
 	}else { 
 		updateButton.classList.add("disabled");
+		log("Mising update Field");
 	}
 });
 
@@ -71,6 +71,7 @@ updateForm.addEventListener('submit', (e) => {
     }else {
 			success.classList.add("d-none");
 			fail.classList.remove("d-none");
+			log(this.responseText);
 		}
 	};
 
@@ -80,6 +81,7 @@ updateForm.addEventListener('submit', (e) => {
 	xhttp.setRequestHeader("x-auth", sessionStorage.userToken);
 	xhttp.send(JSON.stringify(user));
 });
+
 function userToHTML(user) {
 	return `
 	<div class="media col-8 mt-2">
@@ -121,13 +123,14 @@ function getSex(){
 	}
 }
 
-
 function verDetalle(email){
 	getUser(email);
+	log(`User: ${selectedUser.nombre}`);
 	window.location.href = `/detalle.html?user=${email.trim('"')}`;
 }
 function editarUsuario(email){
 	getUser(email);
+	log(`User: ${selectedUser.nombre}`);
 	updateName.value = selectedUser.nombre;
 	updateLastName.value = selectedUser.apellido;
 	updateEmail.value = selectedUser.correo;
@@ -139,6 +142,7 @@ function editarUsuario(email){
 }
 function eliminarUsuario(email){
 	getUser(email);
+	log(`User: ${selectedUser.nombre}`);
 	let div = document.getElementById('deleteModaldiv');
 	div.innerHTML = `<h3>Cuidado!!</h3><p>Estas por eliminar el usuario: ${selectedUser.nombre}</p>`;
 }
@@ -168,6 +172,7 @@ function getUser(email){
 		if (this.readyState == 4 && this.status == 200) {
 			selectedUser = JSON.parse(this.responseText);
 		}
+		log(this.responseText);
 	};
 
 	xhttp.open("GET", `https://users-dasw.herokuapp.com/api/users/${email}`, false);
@@ -192,6 +197,7 @@ function getUsers(){
 			nUsers = users.length;
 			updateFilter();
 		}
+		log(this.responseText);
 	};
 
 	xhttp.open("GET", "https://users-dasw.herokuapp.com/api/users", false);
@@ -247,6 +253,7 @@ userSearch.addEventListener('change', (e) => {
 		return element.nombre.includes(userSearch.value);
 	});
 	page = 0;
+	log(page);
 	updateFilter();
 });
 
